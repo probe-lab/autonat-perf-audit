@@ -31,7 +31,7 @@ improves on this with per-address testing and nonce-based verification.
 
 Despite widespread use of libp2p's AutoNAT technique across libp2p implementations and libp2p-based networks, there hasn't been a targeted, in-depth analysis of AutoNAT's performance and effectiveness. This project investigates AutoNAT v2 across go-libp2p, rust-libp2p, and
 js-libp2p to evaluate whether it solves the reachability detection
-problem. . A companion [Nebula crawl analysis](nebula-autonat-analysis.md)
+problem. A companion [Nebula crawl analysis](nebula-autonat-analysis.md)
 of the IPFS Amino DHT confirms that DHT-mode flipping exists in
 production (2–12% per Kubo version), but most of it correlates with
 disconnections and restarts. Only ~0.39% of stably-reachable peers
