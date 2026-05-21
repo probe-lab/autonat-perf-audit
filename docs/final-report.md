@@ -417,8 +417,8 @@ UDP dials to move the counter to `Allowed` (≥5 successes in a 100-dial window)
 `dialerHost` filters UDP addresses out of every QUIC dial-back and
 responds with `E_DIAL_REFUSED`.
 
-The net effect is that the v2 server cannot prove a client's QUIC
-address reachable. `E_DIAL_REFUSED` carries a property of the
+**The net effect is that the v2 server cannot prove a client's QUIC
+address reachable.** `E_DIAL_REFUSED` carries a property of the
 **server's** UDP history, not the client's NAT. AutoNAT v2's
 reachability tracker discards refusals from confidence outcomes
 (see Finding 1: `E_DIAL_REFUSED` does not erode confidence and does
