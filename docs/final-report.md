@@ -68,20 +68,20 @@ for how each finding manifests per implementation.
 The most impactful finding is that **global (v1) and per-address (v2)
 reachability can disagree, and there is no canonical way to reconcile
 them**. In go-libp2p, DHT and AutoRelay subscribe to v1's global
-flag and do not consume v2's per-address signal. This directly
+flag and do not consume v2's per-address signal. As a result, the unstable global flag overrides v2's stable per-address
+result and drives DHT/relay decisions. This directly
 impacts Kubo, for instance, which relies on go-libp2p's AutoNAT
 signal to decide DHT server participation (see
-[Nebula crawl analysis](nebula-autonat-analysis.md)). Both protocols select servers from
+[Nebula crawl analysis](nebula-autonat-analysis.md)). Both v1 and v2 select servers from
 the same peer pool, but v1 counts all non-success results (including
 timeouts from honest-but-unreliable servers) as evidence against
 reachability, while v2 discards them entirely. This means **v1 can
 oscillate due to server unreliability alone — no malicious peers
 needed** (60% of testbed runs with 5/7 unreliable servers; 0% of v2
-runs). The unstable global flag overrides v2's stable per-address
-result and drives DHT/relay decisions. rust-libp2p and js-libp2p
-are not affected today because their DHT already consumes v2-level
-signals — but this is an implementation choice, not a spec
-requirement. Neither documents what should happen if both protocols
+runs). rust-libp2p and js-libp2p
+are not affected today because their DHT consumes v2-level
+signals only — but this is an implementation choice, not a spec
+requirement. Neither v1, nor v2 documents what should happen if both protocols
 run, and the spec doesn't define it either.
 
 Cross-implementation analysis reveals that **only go-libp2p has v2
