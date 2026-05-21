@@ -432,9 +432,9 @@ main host's counter reaches `Allowed` within minutes of startup, so
 affected servers quickly recover and dial-back works. The failure
 surfaces on **freshly deployed infrastructure, low-traffic nodes,
 and isolated testbeds**, where the main host does not generate
-enough successful outbound UDP to leave `Probing`. When every
+enough successful outbound UDP traffic to leave `Probing`. As a result, when every
 reachable v2 server shares the same condition (the typical testbed
-case), the client never confirms its QUIC addresses — they stay
+case), the client never confirms its QUIC addresses — servers stay
 `Unknown` indefinitely, even though the node is genuinely reachable.
 
 This is not a false *Unreachable* verdict — confidence is not
@@ -448,8 +448,8 @@ rust-libp2p and js-libp2p do not implement a black hole detector and
 are not affected. TCP addresses are unaffected — the detector only
 gates UDP/QUIC.
 
-**Solution:** Remove the black hole detector from the v2 `dialerHost`
-entirely, matching the v1 fix applied in
+**Solution: Remove the black hole detector from the v2 `dialerHost`
+entirely**, matching the v1 fix applied in
 [PR #2529](https://github.com/libp2p/go-libp2p/pull/2529). V1 solved
 the same class of issue by passing `nil` counters to the v1 dialer
 so the detector never runs there; v2 should do the same instead of
